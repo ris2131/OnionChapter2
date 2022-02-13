@@ -12,28 +12,19 @@ import java.util.regex.Pattern;
  * 내가 잘못 읽었던 부분이 전달 문자를 입력 받는다고 생각했고, 그러다보니 String 읽는데 문제가 생기더라.
  */
 public class StringCalculator {
-    public static void main(String[] args) throws IOException {
-
-        String line = "//;\n1,2,3:4;5";;
+    int add(String text){
         String numLine=null;
         String originalDelimeters=",|:";
         String delimiters = null;
         String [] stNumbers;
         int [] numbers;
         int total=0;
-        /*
-        //정규표현식 써보고 싶은데 너무 어렵고 잘 모르겠다... 공부 꼭 해두자.(블로그)
-        if(line.matches("//(.)\n")){//(.)\n(.*)
-            System.out.println("custom");
-        }*/
         String pattern = "//(.)\n(.*)";
 
-        boolean regex = Pattern.matches(pattern,line);
+        boolean regex = Pattern.matches(pattern,text);
         if(regex){
-            delimiters = originalDelimeters+"|"+line.charAt(2);
-            numLine = line.substring(4,line.length());
-            //System.out.println(delimiters);
-            //System.out.println(numLine);
+            delimiters = originalDelimeters+"|"+text.charAt(2);
+            numLine = text.substring(4,text.length());
         }
         stNumbers = numLine.split(delimiters);
         //split할때 or 표시를 해야하는구나
@@ -43,7 +34,7 @@ public class StringCalculator {
             numbers[i] = Integer.parseInt(stNumbers[i]);
             total+=numbers[i];
         }
-        System.out.println(total);
+        return total;
     }
 }
 //첫 del이 제대로 안먹겠네..
