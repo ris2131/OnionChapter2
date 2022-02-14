@@ -14,10 +14,7 @@ import java.util.regex.Pattern;
 public class StringCalculator{
     //add 가 이렇게 줄어 들 수가 있구나.
     int add(String text) throws NumbersMinusException {
-
         if(text==null ||text.isEmpty())return 0;
-
-
         return sum(toInts(split(text)));
     }
     private String[] split(String text){
