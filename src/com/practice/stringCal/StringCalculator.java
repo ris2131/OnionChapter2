@@ -12,39 +12,44 @@ import java.util.regex.Pattern;
  * 내가 잘못 읽었던 부분이 전달 문자를 입력 받는다고 생각했고, 그러다보니 String 읽는데 문제가 생기더라.
  */
 public class StringCalculator{
+    //add 가 이렇게 줄어 들 수가 있구나.
     int add(String text) throws NumbersMinusException {
-        String numLine=null;
+
+        if(text==null ||text.isEmpty())return 0;
+
+
+        return sum(toInts(split(text)));
+    }
+    private String[] split(String text){
+        String pattern = "//(.)\n(.*)";
         String originalDelimeters=",|:";
         String delimiters = null;
-        String [] stNumbers;
-        int [] numbers;
-        int total=0;
-        String pattern = "//(.)\n(.*)";
-
-        if(text==null)return 0;
-        if(text.isEmpty())return 0;
-        //else if(text.length()==0)return 0;
+        String numLine=null;
 
         boolean regex = Pattern.matches(pattern,text);
         delimiters = originalDelimeters;
         numLine=text;
         if(regex){
-            delimiters += "|"+text.charAt(2);
+            delimiters = String.valueOf(text.charAt(2));//split할때 or 표시를 해야하는구나
             numLine = text.substring(4,text.length());
         }
-        stNumbers = numLine.split(delimiters);
-        //split할때 or 표시를 해야하는구나
-
-        numbers = new int[stNumbers.length];
-        for(int i=0;i<stNumbers.length;i++){
-            numbers[i] = Integer.parseInt(stNumbers[i]);
+        return numLine.split(delimiters);
+    }
+    private int[] toInts(String[] values){
+        int [] numbers = new int[values.length];
+        for(int i=0;i<values.length;i++){
+            numbers[i] = Integer.parseInt(values[i]);
             if(numbers[i]<0){
                 throw new NumbersMinusException(numbers[i]);
             }
-
-            total+=numbers[i];
         }
-        return total;
+        return numbers;
+    }
+    private int sum(int[] numbers){
+        int sum=0;
+        for(int number:numbers)
+            sum+= number;
+        return sum;
     }
 }
 //첫 del이 제대로 안먹겠네..

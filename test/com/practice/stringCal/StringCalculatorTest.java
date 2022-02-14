@@ -11,27 +11,26 @@ public class StringCalculatorTest extends TestCase {
         stringCalculator = new StringCalculator();
     }
     @Test
-    public void testAdd() {
-        assertEquals("//;\n1,2,3:4;5",stringCalculator.add("//;\n1,2,3:4;5"),15);
+    public void testAddCustom() {
+        assertEquals("//;\n1,2,3:4;5",15,stringCalculator.add("//;\n1;2;3;4;5"));
     }
     @Test
     public void testAddOriginal() {
-        assertEquals("text : 1,2,3:4,-5 ",stringCalculator.add("1,2,3:4,5"),15);
+        assertEquals("text : 1,2,3:4,-5 ",15,stringCalculator.add("1,2,3:4,5"));
     }
     @Test
     public void testAddNull() {
-        assertEquals("text : Null ",stringCalculator.add(""),0);
+        assertEquals("text : empty ",0 ,stringCalculator.add(""));
+        assertEquals("text : null ", 0 ,stringCalculator.add(null));
+    }
+    @Test
+    public void testAddOne() {
+        assertEquals("text : 1 ",7 ,stringCalculator.add("7"));
     }
     //왜 fail 뜨지?
-    @Test(expected = NumbersMinusException.class)
-    public void testAddMinus() {
+    @Test(expected = RuntimeException.class)
+    public void testAddNegative() {
         stringCalculator.add("1,2,3:4,-5");
+    }
 
-    }
-    //왜 fail 뜨지?
-    @Test(expected = NullPointerException.class)
-    public void testExceptionThrown(){
-        String str = null;
-        str.length();
-    }
 }
